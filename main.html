@@ -4,85 +4,34 @@
 
 <head>
 	<link rel="stylesheet" href="styles.css">
+
+	
+   
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-      <div class="page-wrap">
-      <div class="badge">TRIVIA</div>
-      <div class="card">
-        <div class="card-header">
-          <div class="q-number">1</div>
-          <div class="q-meta">
-            <!-- <span class="label">Geography · India</span> -->
-            <div class="q-text">What is the capital of India?</div>
-          </div>
-        </div>
 
-        <div class="options">
-          <input type="radio" name="capital" id="opt-delhi" value="delhi" />
-          <label class="option-label" for="opt-delhi">
-            <div class="radio-dot"></div>
+    <h2>What is the capital of India?</h2>
+
+    <div class="options">
+        <label>
+            <input type="radio" name="capital">
             New Delhi
-          </label>
-          <input type="radio" name="capital" id="opt-mumbai" value="mumbai" />
-          <label class="option-label" for="opt-mumbai">
-            <div class="radio-dot"></div>
+        </label>
+
+        <label>
+            <input type="radio" name="capital">
             Mumbai
-          </label>
-        </div>
+        </label>
+    </div>
 
-        <!-- <div class="divider">Did you know?</div> -->
+    <blockquote cite="https://en.wikipedia.org/wiki/New_Delhi">
+        New Delhi is the capital of India and an administrative district of NCT Delhi.
+    </blockquote>
 
-        <blockquote>
-          New Delhi is the capital of India and an administrative district of
-          NCT Delhi.
-          <!-- <cite
-            > -->
-            <!-- <a
-              href="https://en.wikipedia.org/wiki/New_Delhi"
-              target="_blank"
-              rel="noopener"
-              >New Delhi</a
-            ></cite
-          > -->
-        </blockquote>
+</body>
+</html>
 
-        <!-- <div class="submit-row">
-          <button class="btn-submit" onclick="checkAnswer()">
-            Submit Answer
-          </button>
-        </div>
-        <div class="result-banner" id="result"></div>
-      </div>
-      <p class="footer-note">
-        Quiz crafted by Ritesh &nbsp;·&nbsp; Good luck with your exam! 🍀
-      </p>
-    </div> -->
-
-	  <script type="text/javascript" src="./script.js">
-      function checkAnswer() {
-        const selected = document.querySelector(
-          'input[name="capital"]:checked',
-        );
-        const banner = document.getElementById("result");
-        if (!selected) {
-          banner.className = "result-banner wrong";
-          banner.textContent = "⚠️ Please select an answer before submitting.";
-          banner.style.display = "block";
-          return;
-        }
-        banner.className =
-          selected.value === "delhi"
-            ? "result-banner correct"
-            : "result-banner wrong";
-        banner.textContent =
-          selected.value === "delhi"
-            ? "✅ Correct! New Delhi is the capital of India."
-            : "❌ Not quite! The correct answer is New Delhi.";
-        banner.style.display = "block";
-      }
-		  
+	  
 </script>
 
 </body>
