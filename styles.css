@@ -1,4 +1,4 @@
-   *,
+ *,
       *::before,
       *::after {
         box-sizing: border-box;
@@ -33,8 +33,6 @@
         width: 100%;
         max-width: 740px;
       }
-
-      /* ── badge ── */
       .badge {
         display: inline-flex;
         align-items: center;
@@ -49,39 +47,6 @@
         border-radius: 20px;
         margin-bottom: 1.2rem;
       }
-
-      /* ── progress bar ── */
-      .progress-wrap {
-        width: 100%;
-        height: 6px;
-        background: var(--border);
-        border-radius: 99px;
-        margin-bottom: 1.4rem;
-        overflow: hidden;
-      }
-      .progress-fill {
-        height: 100%;
-        background: var(--green);
-        border-radius: 99px;
-        transition: width 0.3s ease;
-      }
-
-      /* ── question sections – all hidden by default ── */
-      .q-section {
-        display: none;
-      }
-
-      /* show whichever section is targeted; default to q1 if no hash */
-      .q-section:target {
-        display: block;
-      }
-
-      /* fallback: show q1 when nothing is targeted */
-      body:not(:has(.q-section:target)) #q1 {
-        display: block;
-      }
-
-      /* ── card ── */
       .card {
         background: var(--white);
         border-radius: 20px;
@@ -90,7 +55,7 @@
         box-shadow:
           0 8px 40px rgba(45, 158, 95, 0.1),
           0 2px 8px rgba(0, 0, 0, 0.04);
-        animation: fadeUp 0.45s ease both;
+        animation: fadeUp 0.5s ease both;
       }
       @keyframes fadeUp {
         from {
@@ -143,8 +108,6 @@
         color: var(--ink);
         line-height: 1.4;
       }
-
-      /* ── options (pure CSS checked state) ── */
       .options {
         display: flex;
         flex-direction: column;
@@ -160,13 +123,13 @@
         border: 1.5px solid var(--border);
         background: var(--green-light);
         cursor: pointer;
-        font-size: 15px;
-        color: var(--ink);
-        font-weight: 500;
         transition:
           border-color 0.2s,
           background 0.2s,
           transform 0.15s;
+        font-size: 15px;
+        color: var(--ink);
+        font-weight: 500;
       }
       .option-label:hover {
         border-color: var(--green);
@@ -196,8 +159,6 @@
           background 0.2s,
           box-shadow 0.2s;
       }
-
-      /* ── divider ── */
       .divider {
         display: flex;
         align-items: center;
@@ -216,12 +177,13 @@
         height: 1px;
         background: var(--border);
       }
-
-      /* ── blockquote answer ── */
       blockquote {
-        padding: 15px 15px 15px 20px;
+        max-width: 600px;
+        margin: 10px;
+        padding: 15px;
         border-left: 8px solid #2d9e5f;
         background-color: #f8fffe;
+        font-weight: bold;
         border-radius: 0 8px 8px 0;
         color: var(--ink);
         font-size: 15px;
@@ -240,99 +202,68 @@
         line-height: 1;
         pointer-events: none;
       }
-      blockquote strong {
-        color: var(--green-dark);
-        font-weight: 600;
-      }
       blockquote cite {
         display: block;
-        margin-top: 8px;
+        margin-top: 10px;
         font-size: 12px;
         font-weight: 500;
         font-style: normal;
         color: var(--muted);
       }
-
-      /* ── nav row ── */
-      .nav-row {
+      blockquote cite a {
+        color: var(--green-dark);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      blockquote cite a:hover {
+        color: var(--green);
+      }
+      .submit-row {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: flex-end;
         margin-top: 1.8rem;
       }
-      .btn-nav {
-        display: inline-block;
+      .btn-submit {
         background: var(--green);
         color: #fff;
+        border: none;
         border-radius: 10px;
         padding: 11px 28px;
         font-family: "DM Sans", sans-serif;
         font-size: 14px;
         font-weight: 600;
-        text-decoration: none;
+        cursor: pointer;
         letter-spacing: 0.4px;
         transition:
           background 0.2s,
           transform 0.15s;
       }
-      .btn-nav:hover {
+      .btn-submit:hover {
         background: var(--green-dark);
         transform: translateY(-1px);
       }
-      .btn-nav.prev {
-        background: transparent;
-        color: var(--green);
-        border: 1.5px solid var(--green);
+      .btn-submit:active {
+        transform: translateY(0);
       }
-      .btn-nav.prev:hover {
-        background: var(--green-mid);
-      }
-      .btn-nav.disabled {
-        opacity: 0.3;
-        pointer-events: none;
-      }
-      .q-count {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 500;
-      }
-
-      /* ── done card ── */
-      .done-card {
-        text-align: center;
-        padding: 3rem 2rem;
-      }
-      .done-emoji {
-        font-size: 56px;
-        display: block;
-        margin-bottom: 1rem;
-      }
-      .done-title {
-        font-family: "Playfair Display", serif;
-        font-size: 28px;
-        color: var(--ink);
-        margin-bottom: 0.6rem;
-      }
-      .done-sub {
-        color: var(--muted);
-        font-size: 15px;
-        margin-bottom: 2rem;
-      }
-      .btn-restart {
-        display: inline-block;
-        background: var(--green);
-        color: #fff;
+      .result-banner {
+        display: none;
+        margin-top: 1.2rem;
+        padding: 12px 18px;
         border-radius: 10px;
-        padding: 12px 32px;
-        font-family: "DM Sans", sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
-        text-decoration: none;
+        animation: fadeUp 0.3s ease both;
       }
-      .btn-restart:hover {
-        background: var(--green-dark);
+      .result-banner.correct {
+        background: #e3f5eb;
+        color: #1e6e42;
+        border: 1.5px solid #2d9e5f;
       }
-
+      .result-banner.wrong {
+        background: #fff3e0;
+        color: #a05a00;
+        border: 1.5px solid #f0a500;
+      }
       .footer-note {
         text-align: center;
         margin-top: 1.4rem;
