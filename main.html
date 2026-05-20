@@ -8,7 +8,328 @@
 
 <body>
 	<!-- the entire body must be written by student -->
+       <div class="quiz-wrap">
+      <div class="quiz-header">
+        <h1>Trivia</h1>
+        <p>25 questions — Test your knowledge!</p>
+      </div>
+
+      <div id="q-jump-nav" class="q-jump"></div>
+
+      <div class="progress-bar-bg">
+        <div
+          class="progress-bar-fill"
+          id="progress-fill"
+          style="width: 4%"
+        ></div>
+      </div>
+      <div class="progress-label">
+        <span id="progress-text">Question 1 of 25</span>
+        <span id="score-inline">Score: 0</span>
+      </div>
+
+      <div id="quiz-body" style="margin-top: 1.2rem"></div>
+    </div>
+	
     <script type="text/javascript" src="./script.js">
+
+    const questions = [
+        {
+          q: "What is the capital of India?",
+          opts: ["New Delhi", "Mumbai"],
+          ans: 0,
+          quote:
+            "New Delhi is the capital of India and an administrative district of NCT Delhi.",
+        },
+        {
+          q: "Which planet is known as the Red Planet?",
+          opts: ["Venus", "Mars"],
+          ans: 1,
+        },
+        {
+          q: "Who wrote the play 'Romeo and Juliet'?",
+          opts: ["Charles Dickens", "William Shakespeare"],
+          ans: 1,
+        },
+        {
+          q: "What is the chemical symbol for gold?",
+          opts: ["Ag", "Au"],
+          ans: 1,
+        },
+        { q: "How many sides does a hexagon have?", opts: ["5", "6"], ans: 1 },
+        {
+          q: "Which ocean is the largest?",
+          opts: ["Atlantic", "Pacific"],
+          ans: 1,
+        },
+        {
+          q: "What year did World War II end?",
+          opts: ["1943", "1945"],
+          ans: 1,
+        },
+        {
+          q: "Which country is home to the Great Barrier Reef?",
+          opts: ["Brazil", "Australia"],
+          ans: 1,
+        },
+        {
+          q: "What is the largest mammal on Earth?",
+          opts: ["African Elephant", "Blue Whale"],
+          ans: 1,
+        },
+        {
+          q: "In which city is the Eiffel Tower located?",
+          opts: ["Rome", "Paris"],
+          ans: 1,
+        },
+        {
+          q: "What is the fastest land animal?",
+          opts: ["Lion", "Cheetah"],
+          ans: 1,
+        },
+        {
+          q: "How many bones are in the adult human body?",
+          opts: ["196", "206"],
+          ans: 1,
+        },
+        {
+          q: "Which element has the atomic number 1?",
+          opts: ["Helium", "Hydrogen"],
+          ans: 1,
+        },
+        {
+          q: "What language has the most native speakers in the world?",
+          opts: ["English", "Mandarin Chinese"],
+          ans: 1,
+        },
+        { q: "What is the currency of Japan?", opts: ["Yuan", "Yen"], ans: 1 },
+        {
+          q: "Which planet has the most moons?",
+          opts: ["Jupiter", "Saturn"],
+          ans: 1,
+        },
+        {
+          q: "Who painted the Mona Lisa?",
+          opts: ["Michelangelo", "Leonardo da Vinci"],
+          ans: 1,
+        },
+        {
+          q: "What is the longest river in the world?",
+          opts: ["Amazon", "Nile"],
+          ans: 1,
+        },
+        {
+          q: "What gas do plants absorb during photosynthesis?",
+          opts: ["Oxygen", "Carbon Dioxide"],
+          ans: 1,
+        },
+        {
+          q: "What is the smallest country in the world by area?",
+          opts: ["Monaco", "Vatican City"],
+          ans: 1,
+        },
+        {
+          q: "Which scientist proposed the theory of general relativity?",
+          opts: ["Isaac Newton", "Albert Einstein"],
+          ans: 1,
+        },
+        {
+          q: "What is the hardest natural substance on Earth?",
+          opts: ["Quartz", "Diamond"],
+          ans: 1,
+        },
+        {
+          q: "How many continents are there on Earth?",
+          opts: ["6", "7"],
+          ans: 1,
+        },
+        {
+          q: "Which country is the largest by land area?",
+          opts: ["Canada", "Russia"],
+          ans: 1,
+        },
+        {
+          q: "What is the boiling point of water at sea level?",
+          opts: ["90°C", "100°C"],
+          ans: 1,
+        },
+      ];
+
+      let current = 0,
+        answers = new Array(25).fill(null),
+        checked = new Array(25).fill(false),
+        score = 0,
+        finished = false;
+
+      function buildJumpNav() {
+        var nav = document.getElementById("q-jump-nav");
+        nav.innerHTML = "";
+        questions.forEach(function (_, i) {
+          var d = document.createElement("div");
+          d.className =
+            "q-dot" +
+            (i === current ? " active" : "") +
+            (checked[i]
+              ? answers[i] === questions[i].ans
+                ? " answered-correct"
+                : " answered-wrong"
+              : "");
+          d.textContent = i + 1;
+          d.onclick = (function (idx) {
+            return function () {
+              if (!finished) {
+                current = idx;
+                render();
+              }
+            };
+          })(i);
+          nav.appendChild(d);
+        });
+      }
+
+      function render() {
+        buildJumpNav();
+        document.getElementById("progress-fill").style.width =
+          Math.round(((current + 1) / 25) * 100) + "%";
+        document.getElementById("progress-text").textContent =
+          "Question " + (current + 1) + " of 25";
+        document.getElementById("score-inline").textContent = "Score: " + score;
+
+        var q = questions[current];
+        var isChecked = checked[current];
+        var userAns = answers[current];
+
+        var optsHTML = q.opts
+          .map(function (o, i) {
+            var cls = "option-label";
+            if (isChecked) {
+              if (i === q.ans) cls += " reveal-correct";
+              else if (i === userAns) cls += " wrong";
+            }
+            return (
+              '<label class="' +
+              cls +
+              '">' +
+              '<input type="radio" name="opt" value="' +
+              i +
+              '"' +
+              (userAns === i ? " checked" : "") +
+              (isChecked ? " disabled" : "") +
+              ">" +
+              "<span>" +
+              o +
+              "</span></label>"
+            );
+          })
+          .join("");
+
+        var feedbackHTML = isChecked
+          ? '<div class="feedback ' +
+            (userAns === q.ans ? "correct" : "wrong") +
+            '">' +
+            (userAns === q.ans
+              ? "&#10003; Correct!"
+              : "&#10007; The correct answer is: " + q.opts[q.ans]) +
+            "</div>"
+          : "";
+
+        var quoteHTML =
+          q.quote && isChecked
+            ? '<blockquote class="q-quote">' + q.quote + "</blockquote>"
+            : "";
+
+        var nextBtn =
+          current === 24
+            ? '<button class="btn-nav" onclick="showResults()">Finish Quiz &rarr;</button>'
+            : '<button class="btn-nav" onclick="go(1)">Next &rarr;</button>';
+
+        document.getElementById("quiz-body").innerHTML =
+          '<div class="q-card">' +
+          '<div class="q-number">Question ' +
+          (current + 1) +
+          "</div>" +
+          '<div class="q-text">' +
+          q.q +
+          "</div>" +
+          '<div class="options">' +
+          optsHTML +
+          "</div>" +
+          feedbackHTML +
+          quoteHTML +
+          '<div class="nav-row">' +
+          '<button class="btn-check" id="btn-check"' +
+          (isChecked ? " disabled" : "") +
+          ">" +
+          (isChecked ? "Answered &#10003;" : "Check Answer") +
+          "</button>" +
+          '<button class="btn-nav" ' +
+          (current === 0 ? "disabled" : "") +
+          ' onclick="go(-1)">&larr; Prev</button>' +
+          nextBtn +
+          "</div>" +
+          "</div>";
+
+        document.getElementById("btn-check").onclick = checkAnswer;
+      }
+
+      function checkAnswer() {
+        var sel = document.querySelector("input[name=opt]:checked");
+        if (!sel || checked[current]) return;
+        var val = parseInt(sel.value);
+        answers[current] = val;
+        checked[current] = true;
+        if (val === questions[current].ans) score++;
+        render();
+      }
+
+      function go(dir) {
+        current = Math.max(0, Math.min(24, current + dir));
+        render();
+      }
+
+      function showResults() {
+        finished = true;
+        var pct = Math.round((score / 25) * 100);
+        var grade =
+          pct >= 90
+            ? "Outstanding! 🏆"
+            : pct >= 70
+              ? "Great job! 🎉"
+              : pct >= 50
+                ? "Good effort! 👍"
+                : "Keep practicing! 📚";
+        document.getElementById("progress-fill").style.width = "100%";
+        document.getElementById("progress-text").textContent = "Quiz complete!";
+        document.getElementById("score-inline").textContent =
+          "Final score: " + score + "/25";
+        document.getElementById("q-jump-nav").innerHTML = "";
+        document.getElementById("quiz-body").innerHTML =
+          '<div class="score-card">' +
+          '<div class="score-big">' +
+          score +
+          '<span style="font-size:24px;color:#666">/25</span></div>' +
+          '<div class="score-label">' +
+          pct +
+          "% correct</div>" +
+          '<div class="score-grade">' +
+          grade +
+          "</div>" +
+          '<button class="btn-restart" onclick="restart()">Restart Quiz</button>' +
+          "</div>";
+      }
+
+      function restart() {
+        current = 0;
+        answers = new Array(25).fill(null);
+        checked = new Array(25).fill(false);
+        score = 0;
+        finished = false;
+        render();
+      }
+
+      render();
+
+		
 </script>
 
 </body>
